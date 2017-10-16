@@ -26,7 +26,6 @@ if (!jeedom::apiAccess(init('apikey'), 'compagnon')) {
 
 $content = file_get_contents('php://input');
 $json = json_decode($content, true);
-log::add('compagnon', 'debug', $content);
 
 $eqlogic = compagnon::byId(init('id'));
 if (!is_object($eqlogic)) {
@@ -37,19 +36,32 @@ if ($eqlogic->getEqType_name() != 'compagnon') {
 }
 
 if (is_array($json) && isset($json['location'])) {
+	log::add('compagnon', 'debug', $content);
 	if (isset($json['location']['coords']['latitude']) && isset($json['location']['coords']['longitude'])) {
 		$eqlogic->checkAndUpdateCmd('geolocalisation', $json['location']['coords']['latitude'] . ',' . $json['location']['coords']['longitude']);
 	}
-
 	if (isset($json['location']['activity']['type'])) {
 		$eqlogic->checkAndUpdateCmd('activity', $json['location']['activity']['type']);
 	}
-
 	if (isset($json['location']['battery']['is_charging'])) {
 		$eqlogic->checkAndUpdateCmd('battery_is_charging', $json['location']['battery']['is_charging']);
 	}
-
 	if (isset($json['location']['battery']['level'])) {
 		$eqlogic->checkAndUpdateCmd('battery_level', $json['location']['battery']['level']);
+	}
+}
+
+if (init('data') != '') {
+	log::add('compagnon', 'debug', init('data'));
+	$data = json_decode(init('data'), true);
+	switch ($data['type']) {
+		case 'battery':
+			if (isset($data['isPlugged'])) {
+				$eqlogic->checkAndUpdateCmd('battery_is_charging', $data['isPlugged']);
+			}
+			if (isset($data['level'])) {
+				$eqlogic->checkAndUpdateCmd('battery_level', $data['level']);
+			}
+			break;
 	}
 }
