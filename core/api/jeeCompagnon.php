@@ -49,7 +49,7 @@ if (is_array($json) && isset($json['location'])) {
 		$eqlogic->checkAndUpdateCmd('battery_is_charging', $json['location']['battery']['is_charging']);
 	}
 
-	if (isset($json['location']['battery']['type'])) {
+	if (isset($json['location']['battery']['level'])) {
 		$eqlogic->checkAndUpdateCmd('battery_level', $json['location']['battery']['level']);
 	}
 }
