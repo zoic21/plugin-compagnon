@@ -29,12 +29,45 @@ class compagnon extends eqLogic {
 	public function postSave() {
 		$cmd = $this->getCmd(null, 'geolocalisation');
 		if (!is_object($cmd)) {
-			$cmd = new sonos3Cmd();
+			$cmd = new compagnonCmd();
 			$cmd->setLogicalId('geolocalisation');
 			$cmd->setName(__('Géolocalisation', __FILE__));
 		}
 		$cmd->setType('info');
 		$cmd->setSubType('string');
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->save();
+
+		$cmd = $this->getCmd(null, 'activity');
+		if (!is_object($cmd)) {
+			$cmd = new compagnonCmd();
+			$cmd->setLogicalId('activity');
+			$cmd->setName(__('Activité', __FILE__));
+		}
+		$cmd->setType('info');
+		$cmd->setSubType('string');
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->save();
+
+		$cmd = $this->getCmd(null, 'battery_is_charging');
+		if (!is_object($cmd)) {
+			$cmd = new compagnonCmd();
+			$cmd->setLogicalId('battery_is_charging');
+			$cmd->setName(__('En charge', __FILE__));
+		}
+		$cmd->setType('info');
+		$cmd->setSubType('binary');
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->save();
+
+		$cmd = $this->getCmd(null, 'battery_level');
+		if (!is_object($cmd)) {
+			$cmd = new compagnonCmd();
+			$cmd->setLogicalId('battery_level');
+			$cmd->setName(__('Batterie', __FILE__));
+		}
+		$cmd->setType('info');
+		$cmd->setSubType('numeric');
 		$cmd->setEqLogic_id($this->getId());
 		$cmd->save();
 	}

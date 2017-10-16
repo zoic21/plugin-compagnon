@@ -36,8 +36,20 @@ if ($eqlogic->getEqType_name() != 'compagnon') {
 	throw new Exception(__('Cette commande n\'est pas de type compagnon : ', __FILE__) . init('id'));
 }
 
-if (is_array($json)) {
+if (is_array($json) && isset($json['location'])) {
 	if (isset($json['location']['coords']['latitude']) && isset($json['location']['coords']['longitude'])) {
 		$eqlogic->checkAndUpdateCmd('geolocalisation', $json['location']['coords']['latitude'] . ',' . $json['location']['coords']['longitude']);
+	}
+
+	if (isset($json['location']['activity']['type'])) {
+		$eqlogic->checkAndUpdateCmd('activity', $json['location']['activity']['type']);
+	}
+
+	if (isset($json['location']['battery']['is_charging'])) {
+		$eqlogic->checkAndUpdateCmd('battery_is_charging', $json['location']['battery']['is_charging']);
+	}
+
+	if (isset($json['location']['battery']['type'])) {
+		$eqlogic->checkAndUpdateCmd('battery_level', $json['location']['battery']['level']);
 	}
 }
