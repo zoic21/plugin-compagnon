@@ -24,67 +24,20 @@ class compagnon extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
-	/*
-		     * Fonction exécutée automatiquement toutes les minutes par Jeedom
-		      public static function cron() {
-
-		      }
-	*/
-
-	/*
-		     * Fonction exécutée automatiquement toutes les heures par Jeedom
-		      public static function cronHourly() {
-
-		      }
-	*/
-
-	/*
-		     * Fonction exécutée automatiquement tous les jours par Jeedom
-		      public static function cronDayly() {
-
-		      }
-	*/
-
 	/*     * *********************Méthodes d'instance************************* */
 
-	public function preInsert() {
-
-	}
-
-	public function postInsert() {
-
-	}
-
-	public function preSave() {
-
-	}
-
 	public function postSave() {
-
+		$cmd = $this->getCmd(null, 'geolocalisation');
+		if (!is_object($cmd)) {
+			$cmd = new sonos3Cmd();
+			$cmd->setLogicalId('geolocalisation');
+			$cmd->setName(__('Géolocalisation', __FILE__));
+		}
+		$cmd->setType('info');
+		$cmd->setSubType('string');
+		$cmd->setEqLogic_id($this->getId());
+		$cmd->save();
 	}
-
-	public function preUpdate() {
-
-	}
-
-	public function postUpdate() {
-
-	}
-
-	public function preRemove() {
-
-	}
-
-	public function postRemove() {
-
-	}
-
-	/*
-		     * Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
-		      public function toHtml($_version = 'dashboard') {
-
-		      }
-	*/
 
 	/*     * **********************Getteur Setteur*************************** */
 }
@@ -95,13 +48,6 @@ class compagnonCmd extends cmd {
 	/*     * ***********************Methode static*************************** */
 
 	/*     * *********************Methode d'instance************************* */
-
-	/*
-		     * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-		      public function dontRemoveCmd() {
-		      return true;
-		      }
-	*/
 
 	public function execute($_options = array()) {
 
