@@ -118,7 +118,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
         <input disabled type="text" class="form-control" value="<?php echo jeedom::getApiKey('geotrav') ?>" />
       </div>
     </div>
-
   </fieldset>
 </form>
 </div>
