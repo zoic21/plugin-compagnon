@@ -115,7 +115,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
      <div class="form-group">
       <label class="col-sm-3 control-label">{{Clef API}}</label>
       <div class="col-sm-3">
-        <input disabled type="text" class="form-control" value="<?php echo jeedom::getApiKey('geotrav') ?>" />
+        <input disabled type="text" class="form-control" value="<?php echo jeedom::getApiKey('compagnon') ?>" />
       </div>
     </div>
   </fieldset>
